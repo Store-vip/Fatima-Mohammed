@@ -5,10 +5,10 @@
 
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover"
     />
 
-    <meta name="theme-color" content="#080208" />
+    <meta name="theme-color" content="#090208" />
 
     <title>إلى فاطمة محمد ❤️</title>
 
@@ -24,9 +24,7 @@
   </head>
 
   <body>
-    <!-- =========================
-       INTRO
-  ========================== -->
+    <!-- شاشة البداية -->
 
     <div id="intro" class="intro">
       <div class="intro-glow"></div>
@@ -34,25 +32,25 @@
       <div class="intro-content">
         <div class="intro-small">هــذي إلــچ وحــدچ ❤️</div>
 
-        <div class="intro-heart">♥</div>
+        <div class="intro-heart">
+          <span>♥</span>
+        </div>
 
         <h1>
           فاطمة
-          <span>محمد</span>
+          <strong>محمد</strong>
         </h1>
 
         <p>عندي شي صغير أريد أوصله إلچ...</p>
 
-        <button id="openBtn" class="open-btn">
+        <button id="openBtn" class="open-btn" type="button">
           <span>افتحي هديتچ</span>
           <b>♡</b>
         </button>
       </div>
     </div>
 
-    <!-- =========================
-       BACKGROUND
-  ========================== -->
+    <!-- الخلفية -->
 
     <div class="background">
       <div class="glow glow-1"></div>
@@ -64,53 +62,50 @@
       <div id="hearts"></div>
     </div>
 
-    <!-- =========================
-       SITE
-  ========================== -->
+    <!-- الموقع -->
 
     <main id="site" class="site">
       <!-- HERO -->
 
       <section class="hero">
-        <div class="badge">
+        <div class="hero-badge">
           <span></span>
           هدية إلچ وحدچ
         </div>
 
-        <!-- PHOTO -->
-
         <div class="photo-area">
-          <div class="orbit orbit1"></div>
-          <div class="orbit orbit2"></div>
-          <div class="orbit orbit3"></div>
+          <div class="orbit orbit-1"></div>
+          <div class="orbit orbit-2"></div>
+          <div class="orbit orbit-3"></div>
 
-          <div class="photo-glow"></div>
+          <div class="photo-aura"></div>
 
-          <div class="photo-frame">
-            <!-- الصورة هنا -->
-            <img src="./akram.png" alt="فاطمة محمد" id="mainPhoto" />
+          <!-- هذا الإطار يتحرك وحده -->
+          <div class="photo-border">
+            <!-- الصورة نفسها ما تدور -->
+            <div class="photo-inner">
+              <img id="mainPhoto" src="./akram.png" alt="فاطمة محمد" />
 
-            <div class="photo-shine"></div>
+              <div class="photo-shine"></div>
+            </div>
           </div>
 
-          <div class="dot dot1"></div>
-          <div class="dot dot2"></div>
-          <div class="dot dot3"></div>
+          <span class="photo-dot dot-1"></span>
+          <span class="photo-dot dot-2"></span>
+          <span class="photo-dot dot-3"></span>
         </div>
 
-        <!-- TITLE -->
-
-        <div class="hero-text">
+        <div class="hero-copy">
           <div class="mini-title">إلى الإنسانة اللي إلها مكان خاص</div>
 
-          <h2>
+          <h2 class="hero-title">
             فاطمة
             <span>محمد</span>
           </h2>
 
-          <div class="divider">
+          <div class="title-line">
             <i></i>
-            ♥
+            <b>♥</b>
             <i></i>
           </div>
 
@@ -119,7 +114,7 @@
             يصيرون هم الهدية.
           </p>
 
-          <button id="nextBtn" class="next-btn">
+          <button id="nextBtn" class="main-button" type="button">
             <span>شوفي شنو كتبت إلچ</span>
             <b>↓</b>
           </button>
@@ -129,9 +124,9 @@
       <!-- MESSAGE -->
 
       <section class="section">
-        <div class="section-number">01 — رسالة صغيرة</div>
+        <div class="section-label">01 — رسالة صغيرة</div>
 
-        <div class="message-box reveal">
+        <div class="message-card reveal">
           <div class="quote">“</div>
 
           <h3>
@@ -145,8 +140,8 @@
           </p>
 
           <div class="highlight">
-            ♥
-            <strong> إلچ مكان مميز بقلبي. </strong>
+            <span>♥</span>
+            <strong>إلچ مكان مميز بقلبي.</strong>
           </div>
         </div>
       </section>
@@ -154,45 +149,51 @@
       <!-- CARDS -->
 
       <section class="section">
-        <div class="section-number">02 — ثلاث أشياء</div>
+        <div class="section-label">02 — ثلاث أشياء</div>
 
         <div class="cards">
-          <div class="card reveal">
+          <article class="card reveal">
             <div class="card-icon">♥</div>
+
             <h3>وجودچ يفرق</h3>
-            <p>مجرد وجود بعض الأشخاص يغير الجو كله.</p>
-          </div>
 
-          <div class="card reveal">
+            <p>أكو ناس وجودهم عادي، وأكو ناس مجرد وجودهم يغير الجو كله.</p>
+          </article>
+
+          <article class="card reveal">
             <div class="card-icon">✦</div>
-            <h3>إنتِ مميزة</h3>
-            <p>مو لأنچ كاملة، لأنچ إنتِ.</p>
-          </div>
 
-          <div class="card reveal">
+            <h3>إنتِ مميزة</h3>
+
+            <p>مو لأنچ كاملة، وإنما لأنچ إنتِ.</p>
+          </article>
+
+          <article class="card reveal">
             <div class="card-icon">∞</div>
+
             <h3>أثرچ يبقى</h3>
+
             <p>بعض الأشخاص يتركون أثر ما يروح بسهولة.</p>
-          </div>
+          </article>
         </div>
       </section>
 
-      <!-- BIG PHOTO -->
+      <!-- PHOTO MEMORY -->
 
       <section class="section">
-        <div class="big-photo reveal">
+        <div class="memory reveal">
           <img src="./akram.png" alt="فاطمة محمد" />
 
-          <div class="big-photo-overlay"></div>
+          <div class="memory-overlay"></div>
 
-          <div class="big-photo-text">
+          <div class="memory-title">
             <small>ذكــرى</small>
             <strong>فاطمة محمد</strong>
           </div>
         </div>
 
-        <div class="photo-copy reveal">
-          <small>03 — ذكرى</small>
+        <div class="memory-copy reveal">
+          <small> 03 — ذكرى </small>
 
           <h3>
             خلي هالصورة
@@ -206,8 +207,8 @@
       <!-- COUNTER -->
 
       <section class="section">
-        <div class="counter reveal">
-          <small>04 — الوقت</small>
+        <div class="counter-card reveal">
+          <small> 04 — الوقت </small>
 
           <h3>والأيام تمشي...</h3>
 
@@ -239,11 +240,11 @@
 
       <!-- FINAL -->
 
-      <section class="final">
+      <section class="final-section">
         <div class="final-heart reveal">♥</div>
 
-        <div class="reveal">
-          <small>05 — وآخر شي</small>
+        <div class="final-copy reveal">
+          <small> 05 — وآخر شي </small>
 
           <h3>
             فاطمة محمد
@@ -255,7 +256,7 @@
           <strong class="signature"> من شخص يحب يشوفچ سعيدة ♥ </strong>
         </div>
 
-        <button id="againBtn" class="again-btn">
+        <button id="againBtn" class="again-button" type="button">
           ↻ شغلي البداية مرة ثانية
         </button>
       </section>
