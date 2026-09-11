@@ -1,15 +1,17 @@
 :root {
   --bg: #080208;
-  --pink: #ff2f84;
-  --pink2: #ff71ad;
+  --pink: #ff2d82;
+  --pink-light: #ff70ae;
   --white: #fff8fc;
-  --muted: #dbc3cf;
+  --muted: #dcc3cf;
+  --card: rgba(255, 255, 255, 0.05);
+  --border: rgba(255, 255, 255, 0.09);
 }
 
 * {
+  box-sizing: border-box;
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
 }
 
 html {
@@ -24,8 +26,8 @@ body {
   background:
     radial-gradient(
       circle at 50% 0%,
-      rgba(255, 33, 128, 0.16),
-      transparent 35%
+      rgba(255, 32, 126, 0.16),
+      transparent 34%
     ),
     #080208;
 
@@ -34,6 +36,9 @@ body {
   font-family: "Cairo", sans-serif;
 
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+
+  overscroll-behavior-x: none;
 }
 
 button {
@@ -43,28 +48,32 @@ button {
 
 img {
   display: block;
+  max-width: 100%;
 }
 
-/* =========================
+/* =========================================
    INTRO
-========================= */
+========================================= */
 
 .intro {
   position: fixed;
   inset: 0;
 
-  z-index: 9999;
+  z-index: 10000;
 
-  display: grid;
-  place-items: center;
+  min-height: 100svh;
 
-  padding: 25px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px 22px max(30px, env(safe-area-inset-bottom));
 
   background:
     radial-gradient(
       circle at center,
-      rgba(255, 39, 133, 0.16),
-      transparent 35%
+      rgba(255, 35, 130, 0.16),
+      transparent 38%
     ),
     #080208;
 
@@ -77,133 +86,145 @@ img {
 .intro.hide {
   opacity: 0;
   visibility: hidden;
-  transform: scale(1.05);
   pointer-events: none;
+  transform: scale(1.03);
 }
 
 .intro-glow {
   position: absolute;
 
-  width: 280px;
-  height: 280px;
+  width: 250px;
+  height: 250px;
 
   border-radius: 50%;
 
-  background: rgba(255, 34, 130, 0.24);
+  background: rgba(255, 36, 130, 0.22);
 
   filter: blur(80px);
 
-  animation: glowPulse 3s infinite alternate;
+  animation: introGlow 3s ease-in-out infinite alternate;
 }
 
-@keyframes glowPulse {
+@keyframes introGlow {
   from {
     transform: scale(0.8);
+    opacity: 0.45;
   }
 
   to {
-    transform: scale(1.25);
+    transform: scale(1.3);
+    opacity: 0.8;
   }
 }
 
 .intro-content {
   position: relative;
+  z-index: 2;
 
   width: 100%;
-  max-width: 420px;
+  max-width: 430px;
 
   text-align: center;
 
-  animation: introIn 1s ease both;
+  animation: introEnter 1s cubic-bezier(0.16, 0.8, 0.25, 1) both;
 }
 
-@keyframes introIn {
+@keyframes introEnter {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(35px) scale(0.96);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 }
 
 .intro-small {
-  color: var(--pink2);
-
-  font-size: 0.85rem;
+  color: var(--pink-light);
 
   font-weight: 900;
+  font-size: 0.82rem;
 
   margin-bottom: 25px;
 }
 
 .intro-heart {
-  width: 110px;
-  height: 110px;
+  width: 108px;
+  height: 108px;
 
   margin: auto auto 25px;
-
-  border-radius: 50%;
 
   display: grid;
   place-items: center;
 
-  background: rgba(255, 255, 255, 0.04);
+  border-radius: 50%;
 
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.045);
+
+  border: 1px solid rgba(255, 255, 255, 0.11);
 
   box-shadow:
-    0 0 0 12px rgba(255, 40, 130, 0.03),
-    0 0 55px rgba(255, 40, 130, 0.3);
+    0 0 0 12px rgba(255, 45, 130, 0.03),
+    0 0 60px rgba(255, 45, 130, 0.28);
 
-  color: #ff3d90;
+  animation: heartFloat 2.3s ease-in-out infinite;
+}
 
-  font-size: 3.2rem;
+.intro-heart span {
+  color: #ff3d91;
 
-  animation: heartFloat 2s infinite ease-in-out;
+  font-size: 3.3rem;
+
+  line-height: 1;
+
+  filter: drop-shadow(0 0 18px rgba(255, 55, 145, 0.75));
 }
 
 @keyframes heartFloat {
   0%,
   100% {
-    transform: translateY(0);
+    transform: translateY(0) scale(1);
   }
 
   50% {
-    transform: translateY(-9px) scale(1.05);
+    transform: translateY(-8px) scale(1.05);
   }
 }
 
 .intro h1 {
   font-family: "Tajawal", sans-serif;
 
-  font-size: clamp(3.2rem, 15vw, 5.5rem);
+  font-size: clamp(3.3rem, 15vw, 5.7rem);
 
-  line-height: 0.9;
+  line-height: 0.92;
 
   font-weight: 900;
+
+  letter-spacing: -0.06em;
 }
 
-.intro h1 span {
+.intro h1 strong {
   display: block;
 
   color: var(--pink);
 
-  margin-top: 8px;
+  margin-top: 7px;
 }
 
 .intro p {
-  margin: 22px 0 30px;
+  margin: 20px auto 28px;
+
+  max-width: 320px;
 
   color: var(--muted);
 
-  font-size: 1rem;
-
-  font-weight: 800;
+  font-size: 0.96rem;
 
   line-height: 2;
+
+  font-weight: 800;
 }
 
 .open-btn {
@@ -215,7 +236,7 @@ img {
 
   border-radius: 999px;
 
-  background: linear-gradient(135deg, #ff2d83, #d91566);
+  background: linear-gradient(135deg, #ff2d83, #d91868);
 
   color: white;
 
@@ -226,28 +247,38 @@ img {
 
   gap: 15px;
 
+  font-size: 0.98rem;
+
   font-weight: 900;
 
-  box-shadow: 0 18px 45px rgba(255, 20, 112, 0.25);
-
   cursor: pointer;
+
+  box-shadow: 0 18px 45px rgba(255, 24, 113, 0.25);
+
+  transition: transform 0.2s ease;
+}
+
+.open-btn:active {
+  transform: scale(0.95);
 }
 
 .open-btn b {
   width: 34px;
   height: 34px;
 
-  border-radius: 50%;
-
   display: grid;
   place-items: center;
 
+  border-radius: 50%;
+
   background: rgba(255, 255, 255, 0.15);
+
+  font-size: 1.2rem;
 }
 
-/* =========================
+/* =========================================
    BACKGROUND
-========================= */
+========================================= */
 
 .background {
   position: fixed;
@@ -270,49 +301,49 @@ img {
 
   filter: blur(100px);
 
-  opacity: 0.16;
+  opacity: 0.14;
 
-  animation: bgFloat 12s infinite alternate ease-in-out;
+  animation: bgFloat 12s ease-in-out infinite alternate;
 }
 
 .glow-1 {
-  background: #ff1479;
+  top: -210px;
+  left: -190px;
 
-  top: -200px;
-  left: -180px;
+  background: #ff1479;
 }
 
 .glow-2 {
-  background: #8516ff;
-
-  right: -200px;
+  right: -220px;
   top: 35%;
+
+  background: #8216ff;
 
   animation-delay: -4s;
 }
 
 .glow-3 {
-  background: #ff315b;
-
+  bottom: -200px;
   left: 10%;
-  bottom: -180px;
+
+  background: #ff2b53;
 
   animation-delay: -7s;
 }
 
 @keyframes bgFloat {
   from {
-    transform: translate(0, 0) scale(1);
+    transform: translate3d(0, 0, 0) scale(1);
   }
 
   to {
-    transform: translate(50px, -30px) scale(1.15);
+    transform: translate3d(45px, -30px, 0) scale(1.13);
   }
 }
 
-/* =========================
+/* =========================================
    SITE
-========================= */
+========================================= */
 
 .site {
   position: relative;
@@ -322,17 +353,19 @@ img {
 .section {
   width: min(100%, 720px);
 
-  margin: auto;
+  margin: 0 auto;
 
-  padding: 95px 20px;
+  padding: 88px 20px;
 }
 
-/* =========================
+/* =========================================
    HERO
-========================= */
+========================================= */
 
 .hero {
   min-height: 100svh;
+
+  padding: max(35px, env(safe-area-inset-top)) 20px 80px;
 
   display: flex;
 
@@ -343,202 +376,261 @@ img {
   justify-content: flex-start;
 
   text-align: center;
-
-  padding-top: 45px;
 }
 
-.badge {
+.hero-badge {
   display: inline-flex;
 
   align-items: center;
 
   gap: 8px;
 
-  margin-bottom: 30px;
+  min-height: 36px;
 
-  padding: 8px 15px;
+  padding: 0 15px;
 
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  margin-bottom: 26px;
 
   border-radius: 999px;
 
-  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.09);
 
-  color: #ffd4e6;
+  background: rgba(255, 255, 255, 0.045);
+
+  color: #ffd6e8;
 
   font-size: 0.78rem;
 
   font-weight: 900;
+
+  backdrop-filter: blur(10px);
 }
 
-.badge span {
+.hero-badge span {
   width: 7px;
   height: 7px;
 
   border-radius: 50%;
 
-  background: #ff3d90;
+  background: #ff3e92;
 
-  box-shadow: 0 0 15px #ff3d90;
+  box-shadow: 0 0 15px #ff3e92;
 
-  animation: dotPulse 1.5s infinite;
+  animation: dotPulse 1.4s ease-in-out infinite;
 }
 
 @keyframes dotPulse {
   0%,
   100% {
-    transform: scale(0.8);
     opacity: 0.6;
+    transform: scale(0.8);
   }
 
   50% {
-    transform: scale(1.2);
     opacity: 1;
+    transform: scale(1.2);
   }
 }
 
-/* =========================
+/* =========================================
    PHOTO
-========================= */
+========================================= */
 
 .photo-area {
   position: relative;
 
-  width: min(78vw, 350px);
-
+  width: min(76vw, 340px);
   aspect-ratio: 1;
+
+  flex-shrink: 0;
 
   display: grid;
 
   place-items: center;
 
-  margin-bottom: 35px;
+  margin-bottom: 34px;
 
-  animation: mobilePhotoMove 5s ease-in-out infinite;
+  animation: photoFloat 5s ease-in-out infinite;
+
+  will-change: transform;
 }
 
-@keyframes mobilePhotoMove {
+@keyframes photoFloat {
   0%,
   100% {
-    transform: translateX(0) translateY(0);
+    transform: translate3d(0, 0, 0);
   }
 
   25% {
-    transform: translateX(3px) translateY(-4px);
+    transform: translate3d(3px, -4px, 0);
   }
 
   50% {
-    transform: translateX(0) translateY(-7px);
+    transform: translate3d(0, -7px, 0);
   }
 
   75% {
-    transform: translateX(-3px) translateY(-3px);
+    transform: translate3d(-3px, -3px, 0);
   }
 }
 
-.photo-glow {
+.photo-aura {
   position: absolute;
 
-  width: 68%;
-  height: 68%;
+  width: 67%;
+  height: 67%;
 
   border-radius: 50%;
 
-  background: rgba(255, 35, 130, 0.3);
+  background: rgba(255, 38, 129, 0.28);
 
   filter: blur(45px);
 
-  animation: photoGlow 3s infinite alternate;
+  animation: auraPulse 3s ease-in-out infinite alternate;
 }
 
-@keyframes photoGlow {
+@keyframes auraPulse {
   from {
-    transform: scale(0.9);
-    opacity: 0.5;
+    transform: scale(0.88);
+    opacity: 0.45;
   }
 
   to {
-    transform: scale(1.15);
+    transform: scale(1.14);
     opacity: 0.85;
   }
 }
 
-.photo-frame {
+/*
+   مهم:
+   الإطار الخارجي وحده يتحرك.
+   الصورة لا تتحرك ولا تدور معه.
+*/
+
+.photo-border {
   position: relative;
 
   z-index: 3;
 
   width: 77%;
-
   aspect-ratio: 1;
 
   padding: 6px;
 
   border-radius: 50%;
 
-  background: conic-gradient(#ff267f, #ffa8ce, #8d25ff, #ff267f);
+  background: conic-gradient(from 0deg, #ff287f, #ffafd1, #9228ff, #ff287f);
+
+  animation: borderRotate 9s linear infinite;
 
   box-shadow:
     0 0 0 7px rgba(255, 255, 255, 0.025),
-    0 0 55px rgba(255, 43, 138, 0.37);
+    0 0 55px rgba(255, 43, 138, 0.32);
 
-  animation: ringSpin 9s linear infinite;
+  will-change: transform;
 }
 
-@keyframes ringSpin {
+/*
+  يرجع المحتوى الداخلي عكس دوران الإطار
+  حتى تبقى الصورة ثابتة.
+*/
+
+.photo-inner {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  border: 5px solid #0c040a;
+
+  background: radial-gradient(circle, rgba(255, 50, 135, 0.12), #15050d);
+
+  /*
+    عكس دوران الإطار
+  */
+
+  animation: innerCounterRotate 9s linear infinite;
+}
+
+@keyframes borderRotate {
   to {
     transform: rotate(360deg);
   }
 }
 
-.photo-frame img {
+@keyframes innerCounterRotate {
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+#mainPhoto {
   width: 100%;
   height: 100%;
 
   object-fit: cover;
 
+  object-position: center;
+
   border-radius: 50%;
 
-  border: 5px solid #0d050b;
+  background: #14050d;
 
-  background: #160611;
+  /*
+    حركة تكبير صغيرة فقط
+    بدون أي دوران
+  */
 
-  animation: imageZoom 5s infinite ease-in-out;
+  animation: imageBreath 5s ease-in-out infinite;
+
+  will-change: transform;
+
+  /*
+    يمنع التشوه
+  */
+
+  transform-origin: center center;
 }
 
-@keyframes imageZoom {
+@keyframes imageBreath {
   0%,
   100% {
-    transform: scale(1.02);
+    transform: scale(1.03);
   }
 
   50% {
-    transform: scale(1.08);
+    transform: scale(1.075);
   }
 }
 
 .photo-shine {
   position: absolute;
 
-  inset: -40%;
+  inset: -35%;
+
+  border-radius: 50%;
+
+  pointer-events: none;
 
   background: linear-gradient(
     115deg,
-    transparent 42%,
-    rgba(255, 255, 255, 0.25) 50%,
-    transparent 58%
+    transparent 40%,
+    rgba(255, 255, 255, 0.2) 50%,
+    transparent 60%
   );
 
   transform: translateX(-110%) rotate(8deg);
 
-  animation: shine 5s infinite ease-in-out;
-
-  border-radius: 50%;
+  animation: shineMove 5.2s ease-in-out infinite;
 }
 
-@keyframes shine {
+@keyframes shineMove {
   0%,
-  40% {
+  42% {
     transform: translateX(-110%) rotate(8deg);
   }
 
@@ -548,178 +640,193 @@ img {
   }
 }
 
+/* =========================================
+   ORBITS
+========================================= */
+
 .orbit {
   position: absolute;
 
   border-radius: 50%;
 
-  border: 1px solid rgba(255, 100, 170, 0.22);
+  pointer-events: none;
+
+  border: 1px solid rgba(255, 104, 170, 0.2);
 }
 
-.orbit1 {
+.orbit-1 {
   width: 85%;
   height: 85%;
 
-  animation: spin1 10s linear infinite;
+  animation: orbitA 11s linear infinite;
 }
 
-.orbit2 {
+.orbit-2 {
   width: 100%;
   height: 100%;
 
   border-style: dashed;
 
-  animation: spin2 15s linear infinite;
+  animation: orbitB 16s linear infinite;
 }
 
-.orbit3 {
-  width: 114%;
-  height: 114%;
+.orbit-3 {
+  width: 113%;
+  height: 113%;
 
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.07);
 
-  animation: spin1 20s linear infinite;
+  animation: orbitA 22s linear infinite;
 }
 
-@keyframes spin1 {
+@keyframes orbitA {
   to {
     transform: rotate(360deg);
   }
 }
 
-@keyframes spin2 {
+@keyframes orbitB {
   to {
     transform: rotate(-360deg);
   }
 }
 
-.dot {
+.photo-dot {
   position: absolute;
-
-  width: 9px;
-  height: 9px;
-
-  border-radius: 50%;
-
-  background: #ff4796;
-
-  box-shadow: 0 0 18px #ff4796;
 
   z-index: 5;
 
-  animation: dotFloat 2s infinite ease-in-out;
+  border-radius: 50%;
+
+  background: #ff4997;
+
+  box-shadow: 0 0 18px #ff4997;
+
+  animation: littleDot 2s ease-in-out infinite;
 }
 
-.dot1 {
+.dot-1 {
+  width: 9px;
+  height: 9px;
+
   top: 5%;
-  right: 20%;
+  right: 21%;
 }
 
-.dot2 {
-  bottom: 10%;
-  left: 10%;
+.dot-2 {
   width: 6px;
   height: 6px;
+
+  bottom: 10%;
+  left: 10%;
 }
 
-.dot3 {
-  top: 30%;
-  left: 3%;
+.dot-3 {
   width: 5px;
   height: 5px;
+
+  left: 3%;
+  top: 31%;
 }
 
-@keyframes dotFloat {
+@keyframes littleDot {
   0%,
   100% {
     transform: scale(0.7);
   }
 
   50% {
-    transform: scale(1.3);
+    transform: scale(1.25);
   }
 }
 
-/* =========================
+/* =========================================
    HERO TEXT
-========================= */
+========================================= */
+
+.hero-copy {
+  width: 100%;
+}
 
 .mini-title {
-  color: var(--pink2);
+  color: var(--pink-light);
 
-  font-size: 0.8rem;
+  font-size: 0.78rem;
 
   font-weight: 900;
 }
 
-.hero-text h2 {
-  margin-top: 8px;
+.hero-title {
+  margin-top: 7px;
 
   font-family: "Tajawal", sans-serif;
 
-  font-size: clamp(3.3rem, 18vw, 6rem);
+  font-size: clamp(3.25rem, 18vw, 6.3rem);
 
-  line-height: 0.9;
+  line-height: 0.92;
 
   font-weight: 900;
 
   letter-spacing: -0.07em;
 }
 
-.hero-text h2 span {
+.hero-title span {
   display: block;
 
   color: var(--pink);
+
+  text-shadow: 0 0 35px rgba(255, 43, 137, 0.28);
 }
 
-.divider {
+.title-line {
   display: flex;
 
-  justify-content: center;
   align-items: center;
+
+  justify-content: center;
 
   gap: 12px;
 
-  margin: 20px 0;
+  margin: 19px 0;
 }
 
-.divider i {
+.title-line i {
   width: 55px;
   height: 1px;
 
   background: rgba(255, 255, 255, 0.22);
 }
 
-.divider {
+.title-line b {
   color: #ff438f;
 }
 
-.hero-text > p {
-  max-width: 520px;
+.hero-copy > p {
+  width: min(100%, 520px);
 
-  margin: auto;
+  margin: 0 auto;
 
   color: #ead4de;
 
-  line-height: 2.15;
+  line-height: 2.1;
 
   font-size: 1rem;
 
   font-weight: 800;
 }
 
-.next-btn {
-  margin-top: 26px;
+.main-button {
+  margin-top: 25px;
 
   min-height: 56px;
 
-  padding: 0 20px;
+  padding: 0 19px;
 
   border-radius: 18px;
 
   border: 1px solid rgba(255, 255, 255, 0.1);
 
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.045);
 
   color: white;
 
@@ -734,61 +841,63 @@ img {
   cursor: pointer;
 }
 
-.next-btn b {
+.main-button:active {
+  transform: scale(0.96);
+}
+
+.main-button b {
   width: 32px;
   height: 32px;
+
+  border-radius: 10px;
 
   display: grid;
   place-items: center;
 
-  border-radius: 10px;
-
   background: #ff2d83;
 }
 
-/* =========================
-   SECTIONS
-========================= */
+/* =========================================
+   MESSAGE
+========================================= */
 
-.section-number {
+.section-label {
   margin-bottom: 20px;
 
-  color: #ff65a7;
+  color: #ff66a8;
 
   font-size: 0.8rem;
 
   font-weight: 900;
 }
 
-.message-box {
-  position: relative;
-
+.message-card {
   padding: 30px 22px;
-
-  overflow: hidden;
-
-  border-radius: 30px;
 
   border: 1px solid rgba(255, 255, 255, 0.09);
 
-  background: rgba(255, 255, 255, 0.05);
+  border-radius: 30px;
+
+  background: rgba(255, 255, 255, 0.045);
 
   backdrop-filter: blur(15px);
+
+  overflow: hidden;
 }
 
 .quote {
   font-family: Georgia, serif;
 
-  font-size: 4.7rem;
-
-  color: rgba(255, 81, 154, 0.3);
+  font-size: 4.5rem;
 
   line-height: 0.5;
+
+  color: rgba(255, 81, 154, 0.32);
 
   margin-bottom: 25px;
 }
 
-.message-box h3 {
+.message-card h3 {
   font-family: "Tajawal", sans-serif;
 
   font-size: clamp(2rem, 9vw, 3.4rem);
@@ -798,13 +907,13 @@ img {
   font-weight: 900;
 }
 
-.message-box h3 span {
+.message-card h3 span {
   display: block;
 
   color: var(--pink);
 }
 
-.message-box p {
+.message-card p {
   margin-top: 20px;
 
   color: var(--muted);
@@ -815,21 +924,23 @@ img {
 }
 
 .highlight {
-  margin-top: 25px;
+  margin-top: 23px;
 
-  padding: 16px;
+  min-height: 58px;
+
+  padding: 14px 16px;
 
   border-radius: 18px;
 
-  background: rgba(255, 42, 132, 0.08);
-
-  color: #ff4996;
-
   display: flex;
+
+  align-items: center;
 
   gap: 12px;
 
-  align-items: center;
+  color: #ff4a96;
+
+  background: rgba(255, 45, 132, 0.08);
 }
 
 .highlight strong {
@@ -838,9 +949,9 @@ img {
   font-weight: 900;
 }
 
-/* =========================
+/* =========================================
    CARDS
-========================= */
+========================================= */
 
 .cards {
   display: grid;
@@ -853,37 +964,37 @@ img {
 
   border-radius: 24px;
 
-  background: rgba(255, 255, 255, 0.045);
-
   border: 1px solid rgba(255, 255, 255, 0.08);
+
+  background: rgba(255, 255, 255, 0.045);
 
   transition: transform 0.3s ease;
 }
 
 .card:active {
-  transform: scale(0.98);
+  transform: scale(0.985);
 }
 
 .card-icon {
   width: 50px;
   height: 50px;
 
+  margin-bottom: 14px;
+
   border-radius: 16px;
 
   display: grid;
   place-items: center;
 
-  margin-bottom: 15px;
-
   color: #ff4a96;
 
   background: rgba(255, 48, 137, 0.09);
 
-  font-size: 1.4rem;
+  font-size: 1.35rem;
 }
 
 .card h3 {
-  font-size: 1.2rem;
+  font-size: 1.22rem;
 
   font-weight: 900;
 }
@@ -898,31 +1009,33 @@ img {
   font-weight: 700;
 }
 
-/* =========================
-   BIG PHOTO
-========================= */
+/* =========================================
+   MEMORY
+========================================= */
 
-.big-photo {
+.memory {
   position: relative;
 
   width: 100%;
 
   aspect-ratio: 4 / 5;
 
-  border-radius: 30px;
-
   overflow: hidden;
 
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 30px;
+
+  border: 1px solid rgba(255, 255, 255, 0.09);
+
+  background: #12050c;
 }
 
-.big-photo img {
+.memory img {
   width: 100%;
   height: 100%;
 
   object-fit: cover;
 
-  animation: memoryZoom 7s infinite alternate ease-in-out;
+  animation: memoryZoom 8s ease-in-out infinite alternate;
 }
 
 @keyframes memoryZoom {
@@ -931,69 +1044,73 @@ img {
   }
 
   to {
-    transform: scale(1.08);
+    transform: scale(1.07);
   }
 }
 
-.big-photo-overlay {
+.memory-overlay {
   position: absolute;
   inset: 0;
 
   background: linear-gradient(to top, rgba(5, 2, 7, 0.9), transparent 60%);
 }
 
-.big-photo-text {
+.memory-title {
   position: absolute;
 
   right: 20px;
   bottom: 20px;
 }
 
-.big-photo-text small {
+.memory-title small {
   display: block;
 
-  color: #ff71af;
+  color: #ff70ae;
 
   font-weight: 900;
 }
 
-.big-photo-text strong {
+.memory-title strong {
+  display: block;
+
+  margin-top: 2px;
+
   font-family: "Tajawal", sans-serif;
 
-  font-size: 2.1rem;
+  font-size: 2rem;
 
   font-weight: 900;
 }
 
-.photo-copy {
-  margin-top: 30px;
+.memory-copy {
+  margin-top: 28px;
 }
 
-.photo-copy small {
-  color: var(--pink2);
+.memory-copy small {
+  color: var(--pink-light);
 
   font-weight: 900;
 }
 
-.photo-copy h3 {
+.memory-copy h3 {
   margin-top: 8px;
 
   font-family: "Tajawal", sans-serif;
 
-  font-size: clamp(2.2rem, 10vw, 4rem);
+  font-size: clamp(2.1rem, 10vw, 4rem);
 
   line-height: 1;
 
   font-weight: 900;
 }
 
-.photo-copy h3 span {
+.memory-copy h3 span {
   display: block;
 
   color: var(--pink);
 }
 
-.photo-copy p {
+.memory-copy p {
   margin-top: 17px;
 
   color: var(--muted);
@@ -1003,41 +1120,40 @@ img {
   font-weight: 800;
 }
 
-/* =========================
+/* =========================================
    COUNTER
-========================= */
+========================================= */
 
-.counter {
-  text-align: center;
-
-  padding: 30px 18px;
+.counter-card {
+  padding: 28px 17px;
 
   border-radius: 28px;
+
+  text-align: center;
 
   background: rgba(255, 255, 255, 0.045);
 
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.counter small,
-.final small {
-  color: var(--pink2);
+.counter-card small {
+  color: var(--pink-light);
 
   font-weight: 900;
 }
 
-.counter h3 {
+.counter-card h3 {
   margin-top: 8px;
 
   font-family: "Tajawal", sans-serif;
 
-  font-size: 2.5rem;
+  font-size: clamp(2.2rem, 10vw, 3.6rem);
 
   font-weight: 900;
 }
 
-.counter > p {
-  margin-top: 7px;
+.counter-card > p {
+  margin-top: 6px;
 
   color: var(--muted);
 
@@ -1049,12 +1165,12 @@ img {
 
   grid-template-columns: repeat(4, 1fr);
 
-  gap: 8px;
+  gap: 7px;
 
-  margin-top: 25px;
+  margin-top: 24px;
 }
 
-.counter-grid div {
+.counter-grid > div {
   padding: 14px 4px;
 
   border-radius: 17px;
@@ -1069,7 +1185,7 @@ img {
 
   font-family: "Tajawal", sans-serif;
 
-  font-size: clamp(1.7rem, 8vw, 2.4rem);
+  font-size: clamp(1.5rem, 8vw, 2.4rem);
 
   font-weight: 900;
 }
@@ -1082,26 +1198,26 @@ img {
   font-weight: 800;
 }
 
-/* =========================
+/* =========================================
    FINAL
-========================= */
+========================================= */
 
-.final {
-  min-height: 90svh;
-
+.final-section {
   width: min(100%, 720px);
+
+  min-height: 88svh;
 
   margin: auto;
 
-  padding: 90px 20px;
+  padding: 88px 20px max(50px, env(safe-area-inset-bottom));
 
   display: flex;
 
   flex-direction: column;
 
-  justify-content: center;
-
   align-items: center;
+
+  justify-content: center;
 
   text-align: center;
 }
@@ -1110,24 +1226,22 @@ img {
   width: 105px;
   height: 105px;
 
-  border-radius: 50%;
+  margin-bottom: 25px;
 
   display: grid;
   place-items: center;
 
-  margin-bottom: 25px;
+  border-radius: 50%;
 
   color: #ff438f;
 
-  font-size: 3.4rem;
-
-  border: 1px solid rgba(255, 69, 151, 0.2);
+  font-size: 3.3rem;
 
   background: rgba(255, 42, 136, 0.05);
 
-  box-shadow: 0 0 60px rgba(255, 38, 136, 0.15);
+  border: 1px solid rgba(255, 69, 151, 0.2);
 
-  animation: finalPulse 2.5s infinite ease-in-out;
+  animation: finalPulse 2.5s ease-in-out infinite;
 }
 
 @keyframes finalPulse {
@@ -1141,28 +1255,34 @@ img {
   }
 }
 
-.final h3 {
+.final-copy small {
+  color: var(--pink-light);
+
+  font-weight: 900;
+}
+
+.final-copy h3 {
   margin-top: 8px;
 
   font-family: "Tajawal", sans-serif;
 
-  font-size: clamp(2.3rem, 11vw, 4.5rem);
+  font-size: clamp(2.2rem, 11vw, 4.5rem);
 
   line-height: 1;
 
   font-weight: 900;
 }
 
-.final h3 span {
+.final-copy h3 span {
   display: block;
 
   color: var(--pink);
 }
 
-.final p {
+.final-copy p {
   max-width: 450px;
 
-  margin: 20px auto 0;
+  margin: 18px auto 0;
 
   color: var(--muted);
 
@@ -1174,15 +1294,15 @@ img {
 .signature {
   display: block;
 
-  margin-top: 28px;
+  margin-top: 27px;
 
   color: white;
 
   font-weight: 900;
 }
 
-.again-btn {
-  margin-top: 32px;
+.again-button {
+  margin-top: 30px;
 
   min-height: 48px;
 
@@ -1197,10 +1317,12 @@ img {
   color: #ffd6e7;
 
   font-weight: 800;
+
+  cursor: pointer;
 }
 
 footer {
-  padding: 30px 20px 50px;
+  padding: 30px 20px max(50px, env(safe-area-inset-bottom));
 
   text-align: center;
 
@@ -1211,18 +1333,18 @@ footer {
   font-weight: 800;
 }
 
-/* =========================
+/* =========================================
    REVEAL
-========================= */
+========================================= */
 
 .reveal {
   opacity: 0;
 
-  transform: translateY(35px);
+  transform: translateY(26px);
 
   transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
+    opacity 0.7s ease,
+    transform 0.7s ease;
 }
 
 .reveal.show {
@@ -1231,9 +1353,9 @@ footer {
   transform: translateY(0);
 }
 
-/* =========================
+/* =========================================
    PARTICLES
-========================= */
+========================================= */
 
 .star {
   position: absolute;
@@ -1242,53 +1364,50 @@ footer {
 
   background: white;
 
-  opacity: 0.6;
-
-  animation: starBlink 3s infinite;
+  animation: starBlink 3s ease-in-out infinite;
 }
 
 @keyframes starBlink {
   0%,
   100% {
-    opacity: 0.1;
+    opacity: 0.12;
   }
 
   50% {
-    opacity: 1;
+    opacity: 0.95;
   }
 }
 
 .particle {
   position: absolute;
 
-  width: 4px;
-  height: 4px;
-
   border-radius: 50%;
 
   background: #ff5da2;
 
-  box-shadow: 0 0 12px #ff5da2;
+  box-shadow: 0 0 12px rgba(255, 93, 162, 0.7);
 
-  animation: particleMove linear infinite;
+  animation: particleUp linear infinite;
 }
 
-@keyframes particleMove {
+@keyframes particleUp {
   from {
     transform: translateY(110vh);
+
     opacity: 0;
   }
 
   15% {
-    opacity: 0.8;
+    opacity: 0.75;
   }
 
   85% {
-    opacity: 0.6;
+    opacity: 0.55;
   }
 
   to {
-    transform: translateY(-20vh);
+    transform: translateY(-15vh);
+
     opacity: 0;
   }
 }
@@ -1296,18 +1415,18 @@ footer {
 .float-heart {
   position: absolute;
 
-  bottom: -40px;
+  bottom: -30px;
 
-  color: #ff5a9e;
+  color: #ff559d;
 
   opacity: 0.6;
 
-  animation: heartMove linear forwards;
+  animation: heartUp linear forwards;
 }
 
-@keyframes heartMove {
-  from {
-    transform: translateY(0) scale(0.6);
+@keyframes heartUp {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.6);
 
     opacity: 0;
   }
@@ -1316,62 +1435,114 @@ footer {
     opacity: 0.8;
   }
 
-  to {
-    transform: translate(var(--x), -110vh) rotate(360deg) scale(1.15);
+  100% {
+    transform: translate3d(var(--drift), -110vh, 0) rotate(360deg) scale(1.1);
 
     opacity: 0;
   }
 }
 
-/* =========================
+/* =========================================
    TOUCH
-========================= */
+========================================= */
 
 #touchEffect {
   position: fixed;
 
-  z-index: 999999;
+  z-index: 99999;
 
-  width: 90px;
-  height: 90px;
-
-  pointer-events: none;
+  width: 100px;
+  height: 100px;
 
   border-radius: 50%;
 
-  background: radial-gradient(
-    circle,
-    rgba(255, 70, 150, 0.25),
-    transparent 70%
-  );
+  pointer-events: none;
 
   opacity: 0;
 
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) scale(0.2);
+
+  background: radial-gradient(
+    circle,
+    rgba(255, 71, 151, 0.22),
+    transparent 70%
+  );
 }
 
 #touchEffect.show {
-  animation: touch 0.7s ease-out;
+  animation: touchPulse 0.7s ease-out;
 }
 
-@keyframes touch {
+@keyframes touchPulse {
   from {
     opacity: 0.8;
-    transform: translate(-50%, -50%) scale(0.3);
+
+    transform: translate(-50%, -50%) scale(0.2);
   }
 
   to {
     opacity: 0;
+
     transform: translate(-50%, -50%) scale(1.5);
   }
 }
 
-/* =========================
+/* =========================================
    DESKTOP
-========================= */
+========================================= */
 
 @media (min-width: 760px) {
   .cards {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* =========================================
+   SMALL PHONES
+========================================= */
+
+@media (max-height: 700px) {
+  .hero {
+    padding-top: 25px;
+  }
+
+  .hero-badge {
+    margin-bottom: 18px;
+  }
+
+  .photo-area {
+    width: min(66vw, 290px);
+
+    margin-bottom: 24px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.8rem, 15vw, 4.4rem);
+  }
+
+  .hero-copy > p {
+    font-size: 0.9rem;
+
+    line-height: 1.9;
+  }
+}
+
+/* =========================================
+   VERY NARROW
+========================================= */
+
+@media (max-width: 360px) {
+  .section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .hero {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .photo-area {
+    width: 245px;
   }
 }
