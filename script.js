@@ -1,8 +1,8 @@
 "use strict";
 
-/* =========================
+/* =========================================
    ELEMENTS
-========================= */
+========================================= */
 
 const intro = document.getElementById("intro");
 
@@ -14,211 +14,224 @@ const againBtn = document.getElementById("againBtn");
 
 const mainPhoto = document.getElementById("mainPhoto");
 
-const touchEffect = document.getElementById("touchEffect");
-
 const stars = document.getElementById("stars");
 
 const particles = document.getElementById("particles");
 
 const hearts = document.getElementById("hearts");
 
-/* =========================
-   INTRO
-========================= */
+const touchEffect = document.getElementById("touchEffect");
 
-function startSite() {
-  /*
-    نضمن البداية من أعلى الموقع
-  */
+/* =========================================
+   START DATE
+========================================= */
 
+const startDate = new Date("2024-01-01T00:00:00");
+
+/* =========================================
+   ALWAYS START FROM TOP
+========================================= */
+
+function goTop() {
   window.scrollTo({
     top: 0,
     left: 0,
-    behavior: "instant",
+    behavior: "auto",
   });
 
   document.documentElement.scrollTop = 0;
   document.body.scrollTop = 0;
+}
+
+/* =========================================
+   OPEN SITE
+========================================= */
+
+function openSite() {
+  goTop();
 
   intro.classList.add("hide");
 
   document.body.style.overflow = "";
+
+  /*
+    نضمن أنه ما يبقى بالمكان القديم
+  */
+
+  setTimeout(() => {
+    goTop();
+  }, 30);
+
+  setTimeout(() => {
+    goTop();
+  }, 250);
+
+  setTimeout(() => {
+    goTop();
+  }, 700);
 }
 
-openBtn.addEventListener("click", startSite);
+openBtn.addEventListener("click", openSite);
 
-/* =========================
+/* =========================================
    NEXT
-========================= */
+========================================= */
 
 nextBtn.addEventListener("click", () => {
-  const target = document.querySelector(".section");
+  const firstSection = document.querySelector(".section");
 
-  if (!target) return;
+  if (!firstSection) return;
 
-  target.scrollIntoView({
+  firstSection.scrollIntoView({
     behavior: "smooth",
     block: "start",
   });
 });
 
-/* =========================
+/* =========================================
    AGAIN
-========================= */
+========================================= */
 
 againBtn.addEventListener("click", () => {
-  window.scrollTo({
-    top: 0,
-    left: 0,
-    behavior: "instant",
-  });
-
-  document.documentElement.scrollTop = 0;
-  document.body.scrollTop = 0;
-
-  intro.classList.remove("hide");
+  goTop();
 
   document.body.style.overflow = "hidden";
+
+  intro.classList.remove("hide");
 });
 
-/* =========================
-   IMAGE CHECK
-========================= */
+/* =========================================
+   IMAGE
+========================================= */
 
-if (mainPhoto) {
-  mainPhoto.addEventListener("load", () => {
-    console.log("✅ akram.png loaded successfully");
+mainPhoto.addEventListener("load", () => {
+  console.log("✅ akram.png loaded");
 
-    mainPhoto.style.opacity = "1";
-  });
+  mainPhoto.style.visibility = "visible";
+});
 
-  mainPhoto.addEventListener("error", () => {
-    console.error("❌ akram.png could not be loaded");
+mainPhoto.addEventListener("error", () => {
+  console.error("❌ akram.png failed to load");
 
-    /*
-        يظهر مكان الصورة تنبيه واضح
-      */
+  /*
+      ما نخلي الصورة تكسر الشكل
+    */
 
-    mainPhoto.style.display = "none";
+  mainPhoto.style.visibility = "hidden";
+});
 
-    const frame = mainPhoto.parentElement;
-
-    frame.style.background =
-      "radial-gradient(circle, rgba(255,40,130,.20), #15050d)";
-
-    frame.setAttribute("data-error", "الصورة akram.png غير قابلة للقراءة");
-  });
-}
-
-/* =========================
+/* =========================================
    REVEAL
-========================= */
+========================================= */
 
-const reveal = document.querySelectorAll(".reveal");
+const revealItems = document.querySelectorAll(".reveal");
 
-const observer = new IntersectionObserver(
+const revealObserver = new IntersectionObserver(
   (entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
         entry.target.classList.add("show");
 
-        observer.unobserve(entry.target);
+        revealObserver.unobserve(entry.target);
       }
     });
   },
   {
-    threshold: 0.12,
+    threshold: 0.08,
+    rootMargin: "0px 0px -35px 0px",
   },
 );
 
-reveal.forEach((item) => observer.observe(item));
+revealItems.forEach((item) => {
+  revealObserver.observe(item);
+});
 
-/* =========================
+/* =========================================
    STARS
-========================= */
+========================================= */
 
-for (let i = 0; i < 70; i++) {
+for (let i = 0; i < 65; i++) {
   const star = document.createElement("span");
 
   star.className = "star";
 
-  const size = Math.random() * 2.5 + 1;
+  const size = 1 + Math.random() * 2.4;
 
-  star.style.width = size + "px";
+  star.style.width = `${size}px`;
 
-  star.style.height = size + "px";
+  star.style.height = `${size}px`;
 
-  star.style.left = Math.random() * 100 + "%";
+  star.style.left = `${Math.random() * 100}%`;
 
-  star.style.top = Math.random() * 100 + "%";
+  star.style.top = `${Math.random() * 100}%`;
 
-  star.style.animationDuration = 2 + Math.random() * 5 + "s";
+  star.style.animationDuration = `${2 + Math.random() * 5}s`;
 
-  star.style.animationDelay = Math.random() * 5 + "s";
+  star.style.animationDelay = `${Math.random() * 5}s`;
 
   stars.appendChild(star);
 }
 
-/* =========================
+/* =========================================
    PARTICLES
-========================= */
+========================================= */
 
 for (let i = 0; i < 30; i++) {
   const particle = document.createElement("span");
 
   particle.className = "particle";
 
-  const size = Math.random() * 3 + 2;
+  const size = 1.5 + Math.random() * 3;
 
-  particle.style.width = size + "px";
+  particle.style.width = `${size}px`;
 
-  particle.style.height = size + "px";
+  particle.style.height = `${size}px`;
 
-  particle.style.left = Math.random() * 100 + "%";
+  particle.style.left = `${Math.random() * 100}%`;
 
-  particle.style.animationDuration = 6 + Math.random() * 10 + "s";
+  particle.style.animationDuration = `${6 + Math.random() * 9}s`;
 
-  particle.style.animationDelay = Math.random() * 8 + "s";
+  particle.style.animationDelay = `${Math.random() * 10}s`;
 
   particles.appendChild(particle);
 }
 
-/* =========================
+/* =========================================
    FLOATING HEARTS
-========================= */
+========================================= */
 
 function createHeart() {
   const heart = document.createElement("span");
 
   heart.className = "float-heart";
 
-  heart.textContent = Math.random() > 0.5 ? "♥" : "♡";
+  heart.textContent = Math.random() > 0.45 ? "♥" : "♡";
 
-  heart.style.left = Math.random() * 100 + "%";
+  heart.style.left = `${Math.random() * 100}%`;
 
-  heart.style.fontSize = 10 + Math.random() * 15 + "px";
+  heart.style.fontSize = `${10 + Math.random() * 14}px`;
 
-  heart.style.setProperty("--x", -80 + Math.random() * 160 + "px");
+  heart.style.setProperty("--drift", `${-70 + Math.random() * 140}px`);
 
   const duration = 7 + Math.random() * 6;
 
-  heart.style.animationDuration = duration + "s";
+  heart.style.animationDuration = `${duration}s`;
 
   hearts.appendChild(heart);
 
   setTimeout(() => heart.remove(), duration * 1000);
 }
 
-setInterval(createHeart, 700);
+setInterval(createHeart, 850);
 
-/* =========================
-   TOUCH EFFECT
-========================= */
+/* =========================================
+   TOUCH LIGHT
+========================================= */
 
-function touch(x, y) {
-  touchEffect.style.left = x + "px";
+function touchLight(x, y) {
+  touchEffect.style.left = `${x}px`;
 
-  touchEffect.style.top = y + "px";
+  touchEffect.style.top = `${y}px`;
 
   touchEffect.classList.remove("show");
 
@@ -230,48 +243,25 @@ function touch(x, y) {
 document.addEventListener(
   "touchstart",
   (event) => {
-    const t = event.touches[0];
+    const touch = event.touches[0];
 
-    if (!t) return;
+    if (!touch) return;
 
-    touch(t.clientX, t.clientY);
+    touchLight(touch.clientX, touch.clientY);
   },
   {
     passive: true,
   },
 );
 
-/* =========================
-   DESKTOP MOUSE
-========================= */
-
-document.addEventListener(
-  "mousemove",
-  (event) => {
-    /*
-      فقط تأثير صغير،
-      والموقع لا يعتمد عليه.
-    */
-
-    if (window.innerWidth > 760) {
-      touch(event.clientX, event.clientY);
-    }
-  },
-  {
-    passive: true,
-  },
-);
-
-/* =========================
+/* =========================================
    COUNTER
-========================= */
-
-const startDate = new Date("2024-01-01T00:00:00");
+========================================= */
 
 function updateCounter() {
   const now = new Date();
 
-  let diff = now - startDate;
+  let diff = now.getTime() - startDate.getTime();
 
   if (diff < 0) {
     diff = 0;
@@ -306,12 +296,22 @@ updateCounter();
 
 setInterval(updateCounter, 1000);
 
-/* =========================
-   START STATE
-========================= */
+/* =========================================
+   INITIAL STATE
+========================================= */
+
+goTop();
 
 document.body.style.overflow = "hidden";
 
+/* =========================================
+   PAGE LOAD
+========================================= */
+
 window.addEventListener("load", () => {
-  window.scrollTo(0, 0);
+  goTop();
+
+  setTimeout(goTop, 100);
+
+  setTimeout(goTop, 500);
 });
